@@ -20,10 +20,10 @@ async fn main() {
             let message = format!("Hello from {}", stream.local_addr().unwrap().port());
             match stream.write_all(message.as_bytes()).await {
                 Ok(_) => {
-                    println!("Sent message: {}", message);
+                    println!("Sent: {}", message);
                     let mut buffer: String = String::new();
                     stream.read_to_string(&mut buffer).await.unwrap();
-                    println!("Received message: {}", buffer);
+                    println!("Received: {}", buffer);
                 }
                 Err(e) => {
                     println!("Error sending message: {}", e);
