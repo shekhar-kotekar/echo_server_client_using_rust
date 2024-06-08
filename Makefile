@@ -1,4 +1,7 @@
-.PHONY: help run_server run_client run
+.PHONY: help build_server run_server run_client run
+
+build_server:
+	make -C echo_server build
 
 run_server:
 	make -C echo_server run
