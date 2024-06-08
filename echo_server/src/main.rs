@@ -2,6 +2,7 @@ use tokio::{
     io::{AsyncReadExt, AsyncWriteExt},
     net::{TcpListener, TcpStream},
 };
+use tracing_subscriber::fmt::format::FmtSpan;
 
 const ECHO_SERVER_ADDRESS: &str = "127.0.0.1:5056";
 
@@ -22,6 +23,7 @@ async fn main() {
     }
 }
 
+#[tracing::instrument]
 async fn handle_connection(mut stream: TcpStream) {
     let mut message = [0; 1024];
     stream.read(&mut message).await.unwrap();
@@ -36,6 +38,7 @@ async fn start_tracing() {
         .with_file(true)
         .with_line_number(true)
         .with_target(false)
+        .with_span_events(FmtSpan::ENTER | FmtSpan::CLOSE)
         .finish();
     tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
     tracing::info!("Tracing started");
