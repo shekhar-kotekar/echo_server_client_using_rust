@@ -9,5 +9,8 @@ run_server:
 run_client:
 	make -C echo_client run
 
-run: run_server run_client
-	@echo "Done"
+clean:
+	make -C echo_server clean
+	make -C echo_client clean
+	cargo clean
+	
